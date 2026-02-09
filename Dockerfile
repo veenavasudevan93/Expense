@@ -1,16 +1,24 @@
-# Use official OpenJDK image
-#FROM openjdk:17-jdk-alpine
+# Use Eclipse Temurin JDK 17 with Alpine
 FROM eclipse-temurin:17-jdk-alpine
 
+# Install Maven for building the jar
+RUN apk add --no-cache maven
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy the jar file into container
+# Copy pom.xml and source code
+COPY pom.xml .
+COPY src ./src
+
+# Build the jar inside Docker
+RUN mvn clean package -DskipTests
+
+# Copy the built jar
 COPY target/expense_tracker-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port your app uses
+# Expose port
 EXPOSE 8080
 
-# Command to run the app
+# Run the app
 CMD ["java", "-jar", "app.jar"]
