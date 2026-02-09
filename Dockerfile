@@ -15,7 +15,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Copy the built jar
-COPY target/expense_tracker-0.0.1-SNAPSHOT.jar app.jar
+COPY lib/expense_tracker-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose port
 EXPOSE 8080
